@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Prnt.sc Adventure</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #74ebd5, #acb6e5);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hang tight, jumping to a random Prnt.sc image!</h1>
+  <p id="url">Generating your adventure...</p>
+  <p id="debug"></p>
+  <script>
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let code = '';
+    // use crypto for better randomness
+    const randomValues = new Uint8Array(6);
+    crypto.getRandomValues(randomValues);
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(randomValues[i] % chars.length);
+    }
+    const url = `https://prnt.sc/${code}`;
+    const debugEl = document.getElementById('debug');
+    const urlEl = document.getElementById('url');
+    urlEl.textContent = `Heading to: ${url}`;
+    debugEl.textContent = `Code length: ${code.length} (should be 6)`;
+    if (code.length !== 6) {
+      debugEl.textContent += ' - Error: Code length wrong! Refresh to try again.';
+    } else {
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
