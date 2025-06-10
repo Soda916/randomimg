@@ -18,39 +18,43 @@
       text-align: center;
     }
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
     }
-    p {
+    button {
+      padding: 15px 30px;
       font-size: 1.2em;
-      margin-top: 10px;
+      font-weight: bold;
+      color: white;
+      background: #ff6b6b;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, background 0.3s;
+    }
+    button:hover {
+      background: #ff8787;
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.95);
     }
   </style>
 </head>
 <body>
-  <h1>Hang tight, jumping to a random Prnt.sc image!</h1>
-  <p id="url">Generating your adventure...</p>
-  <p id="debug"></p>
+  <h1>Ready for a Random Prnt.sc Adventure?</h1>
+  <button onclick="openRandomUrl()">Go!</button>
   <script>
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let code = '';
-    // use crypto for better randomness
-    const randomValues = new Uint8Array(6);
-    crypto.getRandomValues(randomValues);
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(randomValues[i] % chars.length);
-    }
-    const url = `https://prnt.sc/${code}`;
-    const debugEl = document.getElementById('debug');
-    const urlEl = document.getElementById('url');
-    urlEl.textContent = `Heading to: ${url}`;
-    debugEl.textContent = `Code length: ${code.length} (should be 6)`;
-    if (code.length !== 6) {
-      debugEl.textContent += ' - Error: Code length wrong! Refresh to try again.';
-    } else {
-      setTimeout(() => {
-        window.location.href = url;
-      }, 1500);
+    function openRandomUrl() {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const url = `https://prnt.sc/${code}`;
+      window.open(url, '_blank');
     }
   </script>
 </body>
